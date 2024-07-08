@@ -1,5 +1,4 @@
-
-<?php $title = "Personel Listesi";?>
+<?php $title = "Personel Listesi"; ?>
 <?php include 'header.php'; ?>
 
 <div class="container mt-5">
@@ -8,52 +7,50 @@
             <tr align="center">
                 <th>Ad</th>
                 <th>Soyad</th>
-                <th>Departman</th>
-                <th>Unvan</th>
-                <th>İşe Giriş Tarihi</th>
-                <th>İzin Tarihi</th>
-                <th>Dogum Tarihi</th>
+                <th>Doğum Tarihi</th>
                 <th>Cinsiyet</th>
-                <th>Projesi</th>
+                <th>İşe Giriş Tarihi</th>
+                <th>Projeler</th>
             </tr>
         </thead>
         <tbody>
-            <tr align="center">
-                <td>deneme1</td>
-                <td>deneme2</td>
-                <td>deneme3</td>
-                <td>deneme4</td>
-                <td>deneme5</td>
-                <td>deneme6</td>
-                <td>deneme7</td>
-                <td>deneme8</td>
-                <td>deneme9</td>
-            </tr>
-            <tr align="center">
-                <td>deneme1</td>
-                <td>deneme2</td>
-                <td>deneme3</td>
-                <td>deneme4</td>
-                <td>deneme5</td>
-                <td>deneme6</td>
-                <td>deneme7</td>
-                <td>deneme8</td>
-                <td>deneme9</td>
-            </tr>
-            <tr align="center">
-                <td>deneme1</td>
-                <td>deneme2</td>
-                <td>deneme3</td>
-                <td>deneme4</td>
-                <td>deneme5</td>
-                <td>deneme6</td>
-                <td>deneme7</td>
-                <td>deneme8</td>
-                <td>deneme9</td>
-            </tr>
+            <?php
+           
+            $ptds_sunucu = "localhost";
+            $ptds_kullanici = "root";
+            $ptds_sifre = ""; 
+            $ptds_adi = "ptds";
+
+            
+            $baglan = mysqli_connect($ptds_sunucu, $ptds_kullanici, $ptds_sifre, $ptds_adi);
+            if (!$baglan) {
+                die("Veritabanı bağlantısı başarısız: " . mysqli_connect_error());
+            }
+
+            
+            $sql = "SELECT ad, soyad, dogum_tarihi, cinsiyet, ise_giris_tarihi, projeler FROM personeller";
+            $result = $baglan->query($sql);
+
+            if ($result->num_rows > 0) {
+                
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr align='center'>";
+                    echo "<td>" . $row["ad"] . "</td>";
+                    echo "<td>" . $row["soyad"] . "</td>";
+                    echo "<td>" . $row["dogum_tarihi"] . "</td>";
+                    echo "<td>" . $row["cinsiyet"] . "</td>";
+                    echo "<td>" . $row["ise_giris_tarihi"] . "</td>";
+                    echo "<td>" . $row["projeler"] . "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr align='center'><td colspan='6'>Kayıt bulunamadı</td></tr>";
+            }
+
+            mysqli_close($baglan);
+            ?>
         </tbody>
     </table>
 </div>
 
-
-<?php include 'footer.php';?>
+<?php include 'footer.php'; ?>
