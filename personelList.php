@@ -7,10 +7,13 @@
             <tr align="center">
                 <th>Ad</th>
                 <th>Soyad</th>
-                <th>Doğum Tarihi</th>
+                <th>Departman</th>
+                <th>Unvan</th>
                 <th>Cinsiyet</th>
-                <th>İşe Giriş Tarihi</th>
-                <th>Projeler</th>
+                <th>Proje</th>
+                <th>Dogum Tarihi</th>
+                <th>Ise Giris Tarihi</th>
+                <th>Izin Tarihi</th>
             </tr>
         </thead>
         <tbody>
@@ -19,7 +22,7 @@
             $ptds_sunucu = "localhost";
             $ptds_kullanici = "root";
             $ptds_sifre = ""; 
-            $ptds_adi = "ptds";
+            $ptds_adi = "personelKayit";
 
             
             $baglan = mysqli_connect($ptds_sunucu, $ptds_kullanici, $ptds_sifre, $ptds_adi);
@@ -28,7 +31,7 @@
             }
 
             
-            $sql = "SELECT ad, soyad, dogum_tarihi, cinsiyet, ise_giris_tarihi, projeler FROM personeller";
+            $sql = "SELECT ad, soyad, department, unvan, cinsiyet, proje, dogum_tarihi, ise_giris, izin_tarihi FROM personel";
             $result = $baglan->query($sql);
 
             if ($result->num_rows > 0) {
@@ -37,10 +40,18 @@
                     echo "<tr align='center'>";
                     echo "<td>" . $row["ad"] . "</td>";
                     echo "<td>" . $row["soyad"] . "</td>";
-                    echo "<td>" . $row["dogum_tarihi"] . "</td>";
+                    echo "<td>" . $row["department"] . "</td>";
+                    echo "<td>" . $row["unvan"] . "</td>";
                     echo "<td>" . $row["cinsiyet"] . "</td>";
-                    echo "<td>" . $row["ise_giris_tarihi"] . "</td>";
-                    echo "<td>" . $row["projeler"] . "</td>";
+                    echo "<td>" . $row["proje"] . "</td>";
+                    echo "<td>" . $row["dogum_tarihi"] . "</td>";
+                    echo "<td>" . $row["ise_giris"] . "</td>";
+                    if($row["izin_tarihi"] == NULL) {
+                        echo "<td>-</td>";
+                    }
+                    else {
+                        echo "<td>" . $row["izin_tarihi"] . "</td>";
+                    }
                     echo "</tr>";
                 }
             } else {

@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ptds_sunucu = "localhost";
     $ptds_kullanici = "root";
     $ptds_sifre = ""; 
-    $ptds_adi = "ptds";
+    $ptds_adi = "personelKayit";
 
     
     $baglan = mysqli_connect($ptds_sunucu, $ptds_kullanici, $ptds_sifre, $ptds_adi);
@@ -70,14 +70,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $ad = $_POST['ad'];
     $soyad = $_POST['soyad'];
-    $dogum_tarihi = $_POST['dogum_tarihi'];
+    $departman = $_POST['department'];
+    $unvan = $_POST['unvan'];
     $cinsiyet = $_POST['cinsiyet'];
-    $ise_giris_tarihi = $_POST['ise_giris_tarihi'];
     $proje = $_POST['proje'];
+    $dogum_tarihi = $_POST['dogum_tarihi'];
+    $ise_giris_tarihi = $_POST['ise_giris_tarihi'];
+    
 
     
-    $ekle = "INSERT INTO personeller (ad, soyad, dogum_tarihi, cinsiyet, ise_giris_tarihi, projeler) 
-             VALUES ('$ad', '$soyad', '$dogum_tarihi', '$cinsiyet', '$ise_giris_tarihi', '$proje')";
+    $ekle = "INSERT INTO personel (id, ad, soyad, department, unvan, cinsiyet, proje, dogum_tarihi, ise_giris) 
+             VALUES (default, '$ad', '$soyad', '$departman', '$unvan', '$cinsiyet', '$proje', '$dogum_tarihi', '$ise_giris_tarihi')";
 
     
     if ($baglan->query($ekle) === TRUE) {
