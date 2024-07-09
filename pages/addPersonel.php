@@ -1,28 +1,25 @@
 <?php $title = "Personel Ekle"?>
-<?php include('header.php')?>
-<?php include('DbQuerries.php')?>
+<?php include 'header.php'?>
+<?php include('../code/DbQuerries.php')?>
 
 
 <div class="container mt-5">
     <form action="" method="POST">
         <div class="row">
             <div class="col">
-                <label for="ad" class="form-label">Ad</label>
-                <input type="text" id="ad" name="ad" class="form-control">
+                <input type="text" id="ad" name="ad" class="form-control" placeholder="Ad">
             </div>
             <div class="col">
-                <label for="Soyad" class="form-label">Soyad</label>
-                <input type="text" id="soyad" name="soyad" class="form-control">
+                <input type="text" id="soyad" name="soyad" class="form-control" placeholder="Soyad">
+            </div>
+            <div class="col">
+                <select name="cinsiyet" class="form-select">
+                    <option value="Erkek">Erkek</option>
+                    <option value="Kadın">Kadın</option>
+                </select>
             </div>
         </div>
         <div class="row">
-        <div class="col">
-                <label for="cinsiyet" class="form-label">Cinsiyet</label>
-                <select id="cinsiyet" name="cinsiyet" class="form-select">
-                    <option>Erkek</option>
-                    <option>Kadın</option>
-                </select>
-            </div>
             <div class="col">
                 <label for="department" class="form-label">Department</label>
                 <select id="department" name="department" class="form-select">
@@ -54,15 +51,15 @@
         </div>
         <div class="row">
             <div class="col">
-                <label for="ise_giris_tarihi">Ise giris tarihi</label>
+                <label for="ise_giris_tarihi">İşe Giris Tarihi</label>
                 <input type="date" id="ise_baslama_tarihi" name="ise_baslama_tarihi" class="form-control">
             </div>
             <div class="col">
-                <label for="dogum_tarihi">Dogum tarihi</label>
+                <label for="dogum_tarihi">Doğum Tarihi</label>
                 <input type="date" id="dogum_tarihi" name="dogum_tarihi" class="form-control">
             </div>
         </div>
-        <input class="btn btn-secondary btn-sm" type="submit" name="Kaydet" value="Kaydet">
+        <input class="btn btn-secondary btn-sm mt-2" type="submit" name="Kaydet" value="Kaydet">
     </form>
 </div>
 <?php

@@ -1,6 +1,6 @@
 <?php $title = "Personel Listesi"; ?>
 <?php include 'header.php'; ?>
-<?php include('DbQuerries.php')?>
+<?php include('../code/DbQuerries.php')?>
 
 <div class="container mt-5">
     <input class="form-control mb-4" id="searchInput" type="text" placeholder="Arama...">

@@ -58,7 +58,7 @@
                     $row['soyad'],
                     $row['cinsiyet'],
                     $row['dogum_tarihi'],
-                    selectDepartmentById($row['departmen_id']),
+                    selectDepartmentById($row['department_id']),
                     selectUnvanById($row['unvan_id']),
                     $row['ise_baslama_tarihi'],
                     $row['izin_tarihi'],
@@ -67,6 +67,30 @@
                 array_push($personels, $personel);
             }
             return $personels;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function insertDepartment(Department $department) {
+        try {
+            $connection = connect();
+            $sql = "INSERT INTO department VALUES(DEFAULT, '{$department->getName()}')";
+            
+            $result = $connection->exec($sql);
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function updateDepartment(Department $department) {
+        try {
+            $connection = connect();
+            $sql = "UPDATE department SET name='{$department->getName()}' WHERE id={$department->getId()}";
+            
+            $result = $connection->exec($sql);
         }
         catch(PDOException $e) {
             die($e->getMessage());
@@ -91,7 +115,7 @@
     }
 
     function selectDepartmentById($id) {
-        
+        $department;
         try {
             $connection = connect();
             $sql = "SELECT * FROM department WHERE id={$id}";
@@ -99,13 +123,12 @@
             $result = $connection->query($sql);
             $row = $result->fetch();
             $department = new Department($row['id'], $row['name']);
-            return $department;
         }
         catch(PDOException $e) {
             die($e->getMessage());
         }
 
-       
+        return $department;
     }
 
     function selectUnvan() {
@@ -139,6 +162,4 @@
             die($e->getMessage());
         }
     }
-
-    
 ?>

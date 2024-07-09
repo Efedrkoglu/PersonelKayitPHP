@@ -24,6 +24,9 @@
             <li class="nav-item">
               <a class="nav-link" href="addPersonel.php">Personel Ekle</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="departmentPage.php">Departman</a>
+            </li>
           </ul>
         </div>
       </div>
