@@ -3,6 +3,8 @@
 <?php include('DbQuerries.php')?>
 
 <div class="container mt-5">
+    <input class="form-control mb-4" id="searchInput" type="text" placeholder="Arama...">
+
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr align="center">
@@ -17,7 +19,7 @@
                 <th>İzin Tarihi</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="personelTable">
             <?php
                 $personels = selectPersonel();
 
@@ -33,8 +35,7 @@
                     echo "<td>" . $personel->getProje() . "</td>";
                     if($personel->getIzinTarihi() == "0000-00-00") {
                         echo "<td>-</td>";
-                    }
-                    else {
+                    } else {
                         echo "<td>" . $personel->getIzinTarihi() . "</td>";
                     }
                     echo "</tr>";
@@ -43,5 +44,30 @@
         </tbody>
     </table>
 </div>
+
+<script>
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    var input = this.value.toLowerCase();
+    var rows = document.getElementById('personelTable').getElementsByTagName('tr');
+
+    for (var i = 0; i < rows.length; i++) {
+        var cells = rows[i].getElementsByTagName('td');
+        var match = false;
+
+        for (var j = 0; j < cells.length; j++) {
+            if (cells[j].innerHTML.toLowerCase().includes(input)) {
+                match = true;
+                break;
+            }
+        }
+
+        if (match) {
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
+    }
+});
+</script>
 
 <?php include 'footer.php'; ?>

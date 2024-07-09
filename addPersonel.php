@@ -1,5 +1,5 @@
 <?php $title = "Personel Ekle"?>
-<?php include 'header.php'?>
+<?php include('header.php')?>
 <?php include('DbQuerries.php')?>
 
 

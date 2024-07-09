@@ -58,7 +58,7 @@
                     $row['soyad'],
                     $row['cinsiyet'],
                     $row['dogum_tarihi'],
-                    selectDepartmentById($row['department_id']),
+                    selectDepartmentById($row['departmen_id']),
                     selectUnvanById($row['unvan_id']),
                     $row['ise_baslama_tarihi'],
                     $row['izin_tarihi'],
@@ -91,7 +91,7 @@
     }
 
     function selectDepartmentById($id) {
-        $department;
+        
         try {
             $connection = connect();
             $sql = "SELECT * FROM department WHERE id={$id}";
@@ -99,12 +99,13 @@
             $result = $connection->query($sql);
             $row = $result->fetch();
             $department = new Department($row['id'], $row['name']);
+            return $department;
         }
         catch(PDOException $e) {
             die($e->getMessage());
         }
 
-        return $department;
+       
     }
 
     function selectUnvan() {
@@ -138,4 +139,6 @@
             die($e->getMessage());
         }
     }
+
+    
 ?>
