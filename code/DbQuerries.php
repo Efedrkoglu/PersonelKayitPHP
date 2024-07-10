@@ -21,9 +21,9 @@
             $connection = connect();
             $sql = "UPDATE personel SET ad='{$personel->getAd()}', soyad='{$personel->getSoyad()}', 
                     cinsiyet='{$personel->getCinsiyet()}', dogum_tarihi='{$personel->getDogumTarihi()}', 
-                    department_id={$personel->getDepartment()->getId()}, unvan='{$personel->getUnvan()->getId()}', 
-                    ise_baslama_tarihi='{$personel->getIseBaslamaTarihi()}', izin_tarihi='{$personel->getIzinTarihi()}' 
-                    WHERE id={$personel->getId()}";
+                    department_id={$personel->getDepartment()->getId()}, unvan_id='{$personel->getUnvan()->getId()}', 
+                    ise_baslama_tarihi='{$personel->getIseBaslamaTarihi()}', izin_tarihi='{$personel->getIzinTarihi()}', 
+                    proje='{$personel->getProje()}' WHERE id={$personel->getId()}";
             
             $result = $connection->exec($sql);
         }
@@ -52,6 +52,79 @@
             $result = $connection->query($sql);
             $personels = array();
             while($row = $result->fetch()) {
+                if($row['department_id'] != NULL && $row['unvan_id'] != NULL) {
+                    $personel = new Personel(
+                        $row['id'],
+                        $row['ad'],
+                        $row['soyad'],
+                        $row['cinsiyet'],
+                        $row['dogum_tarihi'],
+                        selectDepartmentById($row['department_id']),
+                        selectUnvanById($row['unvan_id']),
+                        $row['ise_baslama_tarihi'],
+                        $row['izin_tarihi'],
+                        $row['proje']
+                    );
+                }
+                else if($row['department_id'] == NULL){
+                    $personel = new Personel(
+                        $row['id'],
+                        $row['ad'],
+                        $row['soyad'],
+                        $row['cinsiyet'],
+                        $row['dogum_tarihi'],
+                        new Department(0, "null"),
+                        selectUnvanById($row['unvan_id']),
+                        $row['ise_baslama_tarihi'],
+                        $row['izin_tarihi'],
+                        $row['proje']
+                    );
+                }
+                else if($row['unvan_id'] != NULL) {
+                    $personel = new Personel(
+                        $row['id'],
+                        $row['ad'],
+                        $row['soyad'],
+                        $row['cinsiyet'],
+                        $row['dogum_tarihi'],
+                        selectDepartmentById($row['department_id']),
+                        new Unvan(0, "null"),
+                        $row['ise_baslama_tarihi'],
+                        $row['izin_tarihi'],
+                        $row['proje']
+                    );
+                }
+                else {
+                    $personel = new Personel(
+                        $row['id'],
+                        $row['ad'],
+                        $row['soyad'],
+                        $row['cinsiyet'],
+                        $row['dogum_tarihi'],
+                        new Department(0, "null"),
+                        new Unvan(0, "null"),
+                        $row['ise_baslama_tarihi'],
+                        $row['izin_tarihi'],
+                        $row['proje']
+                    );
+                }
+                array_push($personels, $personel);
+            }
+            return $personels;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function selectPersonelById($id) {
+        try {
+            $connection = connect();
+            $sql = "SELECT * FROM personel WHERE id={$id}";
+
+            $result = $connection->query($sql);
+            $row = $result->fetch();
+            if($row['department_id'] != NULL && $row['unvan_id'] != NULL) {
                 $personel = new Personel(
                     $row['id'],
                     $row['ad'],
@@ -64,13 +137,54 @@
                     $row['izin_tarihi'],
                     $row['proje']
                 );
-                array_push($personels, $personel);
             }
-            return $personels;
+            else if($row['department_id'] == NULL){
+                $personel = new Personel(
+                    $row['id'],
+                    $row['ad'],
+                    $row['soyad'],
+                    $row['cinsiyet'],
+                    $row['dogum_tarihi'],
+                    new Department(0, "null"),
+                    selectUnvanById($row['unvan_id']),
+                    $row['ise_baslama_tarihi'],
+                    $row['izin_tarihi'],
+                    $row['proje']
+                );
+            }
+            else if($row['unvan_id'] == NULL) {
+                $personel = new Personel(
+                    $row['id'],
+                    $row['ad'],
+                    $row['soyad'],
+                    $row['cinsiyet'],
+                    $row['dogum_tarihi'],
+                    selectDepartmentById($row['department_id']),
+                    new Unvan(0, "null"),
+                    $row['ise_baslama_tarihi'],
+                    $row['izin_tarihi'],
+                    $row['proje']
+                );
+            }
+            else {
+                $personel = new Personel(
+                    $row['id'],
+                    $row['ad'],
+                    $row['soyad'],
+                    $row['cinsiyet'],
+                    $row['dogum_tarihi'],
+                    new Department(0, "null"),
+                    new Unvan(0, "null"),
+                    $row['ise_baslama_tarihi'],
+                    $row['izin_tarihi'],
+                    $row['proje']
+                );
+            }
+            return $personel;
         }
         catch(PDOException $e) {
             die($e->getMessage());
-        }
+        } 
     }
 
     function insertDepartment(Department $department) {
@@ -89,6 +203,18 @@
         try {
             $connection = connect();
             $sql = "UPDATE department SET name='{$department->getName()}' WHERE id={$department->getId()}";
+            
+            $result = $connection->exec($sql);
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function deleteDepartment(Department $department) {
+        try {
+            $connection = connect();
+            $sql = "DELETE FROM department WHERE id={$department->getId()}";
             
             $result = $connection->exec($sql);
         }

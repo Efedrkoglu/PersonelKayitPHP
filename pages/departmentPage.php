@@ -15,11 +15,11 @@
                 <tbody>
                     <?php
                         $departments = selectDepartment();
-
+                        
                         foreach($departments as $department) {
                             echo "<tr align='center'>";
                             echo "<td>" . $department->getName() . "</td>";
-                            echo "<td><a href='?edit=" . $department->getId() . "' class='btn btn-secondary btn-sm'>Düzenle</a></td>";
+                            echo "<td><a href='?edit=" . $department->getId() . "' class='btn btn-secondary btn-sm'>Düzenle</a><a href='?delete=" . $department->getId() . "' class='btn btn-danger btn-sm'>Sil</a></td>";
                             echo "</tr>";
                         }
                     ?>
@@ -57,6 +57,13 @@
             insertDepartment(new Department(1, $departmentName));
         }
 
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
+    if(isset($_GET['delete'])) {
+        $department = selectDepartmentById($_GET['delete']);
+        deleteDepartment($department);
         header("Location: " . $_SERVER['PHP_SELF']);
         exit();
     }

@@ -44,7 +44,7 @@
             return $this->soyad;
         }
 
-        public function setSoyadd($soyad) {
+        public function setSoyad($soyad) {
             $this->soyad = $soyad;
         }
 
