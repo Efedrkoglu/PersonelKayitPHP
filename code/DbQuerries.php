@@ -1,6 +1,7 @@
 <?php
     include("DbConnection.php");
     include("Personel.php");
+    include("User.php");
 
     function insertPersonel(Personel $personel) {
         try {
@@ -283,6 +284,27 @@
             $row = $result->fetch();
             $unvan = new Unvan($row['id'], $row['name']);
             return $unvan;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function authorizeUser(User $user) {
+        try {
+            $connection = connect();
+            $sql = "SELECT * FROM users WHERE username='{$user->getUsername()}' AND password='{$user->getPassword()}'";
+
+            $result = $connection->query($sql);
+            $row = $result->fetchAll();
+            $rowCount = count($row);
+
+            if($rowCount == 1) {
+                return true;
+            }
+            else {
+                return false;
+            } 
         }
         catch(PDOException $e) {
             die($e->getMessage());

@@ -38,7 +38,7 @@ input[type="password"] {
     border-radius: 3px;
 }
 
-button {
+.loginBtn {
     width: 100%;
     padding: 10px;
     background-color: #4CAF50;
@@ -48,6 +48,6 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.loginBtn:hover {
     background-color: #45a049;
 }
