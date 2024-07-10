@@ -81,7 +81,7 @@
                     <input type="date" id="izin_tarihi" name="izin_tarihi" class="form-control" value="<?php echo $personel->getIzinTarihi();?>">
                 </div>
             </div>
-            <input class="btn btn-secondary btn-sm mt-2" type="submit" name="Güncelle" value="Güncelle">
+            <input class="btn btn-success btn-sm mt-2" type="submit" name="Güncelle" value="Güncelle">
             <a class="btn btn-secondary btn-sm mt-2" href="personelList.php">Geri</a>
         </form>
     </div>

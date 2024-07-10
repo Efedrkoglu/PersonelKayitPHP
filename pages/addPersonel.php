@@ -59,7 +59,7 @@
                 <input type="date" id="dogum_tarihi" name="dogum_tarihi" class="form-control">
             </div>
         </div>
-        <input class="btn btn-secondary btn-sm mt-2" type="submit" name="Kaydet" value="Kaydet">
+        <input class="btn btn-success btn-sm mt-2" type="submit" name="Kaydet" value="Kaydet">
     </form>
 </div>
 <?php

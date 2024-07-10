@@ -12,22 +12,22 @@
 ?>
 
 <div class="container mt-5">    
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Silme Onayı</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    Bu personeli silmek istediğinizden emin misiniz?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                    <a id="deleteConfirmButton" class="btn btn-danger" href="#">Sil</a>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-            ...
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-        </div>
-    </div>
     </div>
 
     <input class="form-control mb-4" id="searchInput" type="text" placeholder="Arama...">
@@ -76,7 +76,7 @@
                     } else {
                         echo "<td>" . $personel->getIzinTarihi() . "</td>";
                     }
-                    echo "<td><a class='btn btn-sm btn-secondary' href='editPersonel.php?edit=" . $personel->getId() . "'>Düzenle</a><a class='btn btn-sm btn-danger' href='?delete=" . $personel->getId() . "'>Sil</a></td>";
+                    echo "<td><a class='btn btn-sm btn-secondary' href='editPersonel.php?edit=" . $personel->getId() . "'>Düzenle</a><button class='btn btn-sm btn-danger' onclick='confirmDelete(" . $personel->getId() . ")'>Sil</button></td>";
                     echo "</tr>";
                 }
             ?>
@@ -84,5 +84,14 @@
     </table>
 </div>
 
+<script>
+    function confirmDelete(id) {
+        var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'), {
+            keyboard: false
+        });
+        document.getElementById('deleteConfirmButton').setAttribute('href', '?delete=' + id);
+        deleteModal.show();
+    }
+</script>
 
 <?php include 'footer.php'; ?>

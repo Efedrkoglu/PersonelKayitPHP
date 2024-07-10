@@ -1,50 +1,6 @@
 <?php $title = "Departman"?>
 <?php include 'header.php'?>
 <?php include '../code/DbQuerries.php'?>
-
-<div class="container text-center mt-5">
-    <div class="row">
-        <div class="col">
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr align="center">
-                        <th>İsim</th>
-                        <th>İşlemler</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        $departments = selectDepartment();
-                        
-                        foreach($departments as $department) {
-                            echo "<tr align='center'>";
-                            echo "<td>" . $department->getName() . "</td>";
-                            echo "<td><a href='?edit=" . $department->getId() . "' class='btn btn-secondary btn-sm'>Düzenle</a><a href='?delete=" . $department->getId() . "' class='btn btn-danger btn-sm'>Sil</a></td>";
-                            echo "</tr>";
-                        }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-        <div class="col">
-            <?php
-                $currentDepartment = null;
-                if(isset($_GET['edit'])) {
-                    $departmentId = $_GET['edit'];
-                    $currentDepartment = selectDepartmentById($departmentId);
-                }
-            ?>
-            <form action="" method="POST">
-                <label for="name">Ad</label>
-                <input type="hidden" name="id" value="<?php echo $currentDepartment ? $currentDepartment->getId() : ''; ?>">
-                <input type="text" id="name" name="name" class="form-control" style="text-align: center;" value="<?php echo $currentDepartment ? $currentDepartment->getName() : ''; ?>"><br>
-                <input type="submit" name="Kaydet" value="Kaydet" class="btn btn-secondary btn-sm text-center">
-            </form>
-        </div>
-    </div>
-    <hr>
-</div>
-
 <?php
     if(isset($_POST['Kaydet'])) {
         $departmentID = $_POST['id'];
@@ -68,5 +24,76 @@
         exit();
     }
 ?>
+
+<div class="container text-center mt-5">
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Silme Onayı</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    Bu departmanı silmek istediğinizden emin misiniz?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+                    <a id="deleteConfirmButton" class="btn btn-danger" href="#">Sil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr align="center">
+                        <th>İsim</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $departments = selectDepartment();
+                        
+                        foreach($departments as $department) {
+                            echo "<tr align='center'>";
+                            echo "<td>" . $department->getName() . "</td>";
+                            echo "<td><a class='btn btn-sm btn-secondary' href='?edit=" . $department->getId() . "'>Düzenle</a><button class='btn btn-sm btn-danger' onclick='confirmDelete(" . $department->getId() . ")'>Sil</button></td>";
+                            echo "</tr>";
+                        }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            <?php
+                $currentDepartment = null;
+                if(isset($_GET['edit'])) {
+                    $departmentId = $_GET['edit'];
+                    $currentDepartment = selectDepartmentById($departmentId);
+                }
+            ?>
+            <form action="" method="POST">
+                <label for="name">Ad</label>
+                <input type="hidden" name="id" value="<?php echo $currentDepartment ? $currentDepartment->getId() : ''; ?>">
+                <input type="text" id="name" name="name" class="form-control" style="text-align: center;" value="<?php echo $currentDepartment ? $currentDepartment->getName() : ''; ?>"><br>
+                <input type="submit" name="Kaydet" value="Kaydet" class="btn btn-success btn-sm text-center">
+            </form>
+        </div>
+    </div>
+    <hr>
+</div>
+
+<script>
+    function confirmDelete(id) {
+        var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'), {
+            keyboard: false
+        });
+        document.getElementById('deleteConfirmButton').setAttribute('href', '?delete=' + id);
+        deleteModal.show();
+    }
+</script>
 
 <?php include 'footer.php'?>
