@@ -2,6 +2,7 @@
 <?php include 'header.php'; ?>
 <?php include '../code/DbQuerries.php'?>
 <?php include('../code/CheckAuthorized.php')?>
+<?php $personels = selectLeavePersonel();?>
 
 <div class="container mt-5">
     
@@ -26,11 +27,9 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        <?php 
-                            $personels = selectLeavePersonel();
-
+                        <?php
                             foreach($personels as $personel) {
-                                echo "<li class='list-group-item'>" . $personel->getAd() . " " . $peronsel->getSoyad() . "</li>";
+                                echo "<li class='list-group-item'>" . $personel->getAd() . " " . $personel->getSoyad() . "</li>";
                             }
                         ?>
                     </ul>

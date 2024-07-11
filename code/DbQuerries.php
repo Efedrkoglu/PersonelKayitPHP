@@ -204,68 +204,71 @@
             $sql = "SELECT * FROM personelTable WHERE NOT izin_bitis = '0000-00-00'";
 
             $result = $connection->query($sql);
-            $row = $result->fetch();
-            if($row['department_id'] != NULL && $row['unvan_id'] != NULL) {
-                $personel = new Personel(
-                    $row['id'],
-                    $row['ad'],
-                    $row['soyad'],
-                    $row['cinsiyet'],
-                    $row['dogum_tarihi'],
-                    selectDepartmentById($row['department_id']),
-                    selectUnvanById($row['unvan_id']),
-                    $row['ise_baslama_tarihi'],
-                    $row['izin_baslangic'],
-                    $row['izin_bitis'],
-                    $row['proje']
-                );
+            $personels = array();
+            while($row = $result->fetch()) {
+                if($row['department_id'] != NULL && $row['unvan_id'] != NULL) {
+                    $personel = new Personel(
+                        $row['id'],
+                        $row['ad'],
+                        $row['soyad'],
+                        $row['cinsiyet'],
+                        $row['dogum_tarihi'],
+                        selectDepartmentById($row['department_id']),
+                        selectUnvanById($row['unvan_id']),
+                        $row['ise_baslama_tarihi'],
+                        $row['izin_baslangic'],
+                        $row['izin_bitis'],
+                        $row['proje']
+                    );
+                }
+                else if($row['department_id'] == NULL){
+                    $personel = new Personel(
+                        $row['id'],
+                        $row['ad'],
+                        $row['soyad'],
+                        $row['cinsiyet'],
+                        $row['dogum_tarihi'],
+                        new Department(0, "null"),
+                        selectUnvanById($row['unvan_id']),
+                        $row['ise_baslama_tarihi'],
+                        $row['izin_baslangic'],
+                        $row['izin_bitis'],
+                        $row['proje']
+                    );
+                }
+                else if($row['unvan_id'] != NULL) {
+                    $personel = new Personel(
+                        $row['id'],
+                        $row['ad'],
+                        $row['soyad'],
+                        $row['cinsiyet'],
+                        $row['dogum_tarihi'],
+                        selectDepartmentById($row['department_id']),
+                        new Unvan(0, "null"),
+                        $row['ise_baslama_tarihi'],
+                        $row['izin_baslangic'],
+                        $row['izin_bitis'],
+                        $row['proje']
+                    );
+                }
+                else {
+                    $personel = new Personel(
+                        $row['id'],
+                        $row['ad'],
+                        $row['soyad'],
+                        $row['cinsiyet'],
+                        $row['dogum_tarihi'],
+                        new Department(0, "null"),
+                        new Unvan(0, "null"),
+                        $row['ise_baslama_tarihi'],
+                        $row['izin_baslangic'],
+                        $row['izin_bitis'],
+                        $row['proje']
+                    );
+                }
+                array_push($personels, $personel);
             }
-            else if($row['department_id'] == NULL){
-                $personel = new Personel(
-                    $row['id'],
-                    $row['ad'],
-                    $row['soyad'],
-                    $row['cinsiyet'],
-                    $row['dogum_tarihi'],
-                    new Department(0, "null"),
-                    selectUnvanById($row['unvan_id']),
-                    $row['ise_baslama_tarihi'],
-                    $row['izin_baslangic'],
-                    $row['izin_bitis'],
-                    $row['proje']
-                );
-            }
-            else if($row['unvan_id'] == NULL) {
-                $personel = new Personel(
-                    $row['id'],
-                    $row['ad'],
-                    $row['soyad'],
-                    $row['cinsiyet'],
-                    $row['dogum_tarihi'],
-                    selectDepartmentById($row['department_id']),
-                    new Unvan(0, "null"),
-                    $row['ise_baslama_tarihi'],
-                    $row['izin_baslangic'],
-                    $row['izin_bitis'],
-                    $row['proje']
-                );
-            }
-            else {
-                $personel = new Personel(
-                    $row['id'],
-                    $row['ad'],
-                    $row['soyad'],
-                    $row['cinsiyet'],
-                    $row['dogum_tarihi'],
-                    new Department(0, "null"),
-                    new Unvan(0, "null"),
-                    $row['ise_baslama_tarihi'],
-                    $row['izin_baslangic'],
-                    $row['izin_bitis'],
-                    $row['proje']
-                );
-            }
-            return $personel;
+            return $personels;
         }
         catch(PDOException $e) {
             die($e->getMessage());
