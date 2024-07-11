@@ -10,11 +10,12 @@
         private $department;
         private $unvan;
         private $ise_baslama_tarihi;
-        private $izin_tarihi;
+        private $izin_baslangic;
+        private $izin_bitis;
         private $proje;
 
         public function __construct($id, $ad, $soyad, $cinsiyet, $dogum_tarihi, Department $department, 
-                                    Unvan $unvan, $ise_baslama_tarihi, $izin_tarihi, $proje)
+                                    Unvan $unvan, $ise_baslama_tarihi, $izin_baslangic, $izin_bitis, $proje)
         {
             $this->id = $id;
             $this->ad = $ad;
@@ -24,7 +25,8 @@
             $this->department = $department;
             $this->unvan = $unvan;
             $this->ise_baslama_tarihi = $ise_baslama_tarihi;
-            $this->izin_tarihi = $izin_tarihi;
+            $this->izin_baslangic = $izin_baslangic;
+            $this->izin_bitis = $izin_bitis;
             $this->proje = $proje;    
         }
 
@@ -88,12 +90,20 @@
             $this->ise_baslama_tarihi = $ise_baslama_tarihi;
         }
 
-        public function getIzinTarihi() {
-            return $this->izin_tarihi;
+        public function getIzinBaslangic() {
+            return $this->izin_baslangic;
         }
 
-        public function setIzinTarihi($izin_tarihi) {
-            $this->izin_tarihi = $izin_tarihi;
+        public function setIzinBaslangic($izin_baslangic) {
+            $this->izin_baslangic = $izin_baslangic;
+        }
+
+        public function getIzinBitis() {
+            return $this->izin_bitis;
+        }
+
+        public function setIzinBitis($izin_bitis) {
+            $this->izin_bitis = $izin_bitis;
         }
 
         public function getProje() {

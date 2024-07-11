@@ -1,9 +1,11 @@
 <?php $title = "Personel Ekle"?>
 <?php include 'header.php'?>
 <?php include('../code/DbQuerries.php')?>
+<?php include('../code/CheckAuthorized.php')?>
 
 
 <div class="container mt-5">
+    <h4>Personel Ekle</h4>
     <form action="" method="POST">
         <div class="row">
             <div class="col">
@@ -73,6 +75,7 @@
             selectDepartmentById($_POST['department']),
             selectUnvanById($_POST['unvan']),
             $_POST['ise_baslama_tarihi'],
+            "",
             "",
             $_POST['proje']
         );

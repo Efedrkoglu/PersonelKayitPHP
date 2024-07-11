@@ -1,4 +1,28 @@
 <?php include('../code/DbQuerries.php')?>
+<?php include('../code/CheckAuthorized.php')?>
+
+<?php
+    if(isset($_GET['edit'])) {
+        $personel = selectPersonelById($_GET['edit']);
+    }
+?>
+<?php
+    if(isset($_POST['Güncelle'])) {
+        $personel->setAd($_POST['ad']);
+        $personel->setSoyad($_POST['soyad']);
+        $personel->setCinsiyet($_POST['cinsiyet']);
+        $personel->setDogumTarihi($_POST['dogum_tarihi']);
+        $personel->setDepartment(selectDepartmentById($_POST['department']));
+        $personel->setUnvan(selectUnvanById($_POST['unvan']));
+        $personel->setIseBaslamaTarihi($_POST['ise_baslama_tarihi']);
+        $personel->setIzinBaslangic($_POST['izin_baslangic']);
+        $personel->setIzinBitis($_POST['izin_bitis']);
+        $personel->setProje($_POST['proje']);
+        updatePersonel($personel);
+        header("Location: personelList.php");
+        exit();
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,14 +34,47 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const izinSuresiInput = document.getElementById('izin_suresi');
+            const izinBaslangicTarihiInput = document.getElementById('izin_baslangic');
+            const izinBitisTarihiInput = document.getElementById('izin_bitis');
+
+            const today = new Date().toISOString().split('T')[0];
+            izinBaslangicTarihiInput.value = today;
+
+            izinSuresiInput.addEventListener('input', function() {
+                let duration = parseInt(this.value);
+                if (isNaN(duration) || duration < 0) {
+                    this.value = 0;
+                    duration = 0;
+                }
+                const startDate = new Date(izinBaslangicTarihiInput.value);
+                startDate.setDate(startDate.getDate() + duration);
+                izinBitisTarihiInput.value = startDate.toISOString().split('T')[0];
+            });
+
+            izinBitisTarihiInput.addEventListener('input', function() {
+                const endDate = new Date(this.value);
+                const startDate = new Date(izinBaslangicTarihiInput.value);
+                const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+                izinSuresiInput.value = duration >= 0 ? duration : 0;
+            });
+
+            izinBaslangicTarihiInput.addEventListener('input', function() {
+                const duration = parseInt(izinSuresiInput.value);
+                if (!isNaN(duration) && duration >= 0) {
+                    const startDate = new Date(this.value);
+                    startDate.setDate(startDate.getDate() + duration);
+                    izinBitisTarihiInput.value = startDate.toISOString().split('T')[0];
+                }
+            });
+        });
+    </script> 
 </head>
 <body>
-    <?php
-        if(isset($_GET['edit'])) {
-            $personel = selectPersonelById($_GET['edit']);
-        }
-    ?>
     <div class="container mt-5">
+        <h4>Personel Düzenle</h4>
         <form action="" method="POST" class="mt-2">
             <div class="row">
                 <div class="col">
@@ -76,9 +133,17 @@
                 </div>
             </div>
             <div class="row">
-            <div class="col">
-                    <label for="ise_giris_tarihi">İzin Tarihi</label>
-                    <input type="date" id="izin_tarihi" name="izin_tarihi" class="form-control" value="<?php echo $personel->getIzinTarihi();?>">
+                <div class="col">
+                    <label for="izin_suresi">İzin Süresi (gün)</label>
+                    <input type="number" id="izin_suresi" name="izin_suresi" class="form-control" min="0">
+                </div>
+                <div class="col">
+                    <label for="ise_giris_tarihi">İzin Başlangıç</label>
+                    <input type="date" id="izin_baslangic" name="izin_baslangic" class="form-control" value="<?php echo $personel->getIzinBaslangic();?>">
+                </div>
+                <div class="col">
+                    <label for="ise_giris_tarihi">İzin Bitiş</label>
+                    <input type="date" id="izin_bitis" name="izin_bitis" class="form-control" value="<?php echo $personel->getIzinBitis();?>">
                 </div>
             </div>
             <input class="btn btn-success btn-sm mt-2" type="submit" name="Güncelle" value="Güncelle">
@@ -87,21 +152,3 @@
     </div>
 </body>
 </html>
-<?php
-    if(isset($_POST['Güncelle'])) {
-        $personel->setAd($_POST['ad']);
-        $personel->setSoyad($_POST['soyad']);
-        $personel->setCinsiyet($_POST['cinsiyet']);
-        $personel->setDogumTarihi($_POST['dogum_tarihi']);
-        $personel->setDepartment(selectDepartmentById($_POST['department']));
-        $personel->setUnvan(selectUnvanById($_POST['unvan']));
-        $personel->setIseBaslamaTarihi($_POST['ise_baslama_tarihi']);
-        $personel->setIzinTarihi($_POST['izin_tarihi']);
-        $personel->setProje($_POST['proje']);
-        updatePersonel($personel);
-        header("Location: personelList.php");
-        exit();
-    }
-?>
-
-<?php include('footer.php')?>

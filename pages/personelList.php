@@ -1,6 +1,7 @@
 <?php $title = "Personel Listesi"; ?>
 <?php include 'header.php'; ?>
 <?php include('../code/DbQuerries.php')?>
+<?php include('../code/CheckAuthorized.php')?>
 
 <?php
     if(isset($_GET['delete'])) {
@@ -29,7 +30,7 @@
             </div>
         </div>
     </div>
-
+    <h4>Personeller</h4>
     <input class="form-control mb-4" id="searchInput" type="text" placeholder="Arama...">
 
     <table class="table table-striped table-bordered table-hover">
@@ -43,7 +44,8 @@
                 <th>Unvan</th>
                 <th>İşe Başlama Tarihi</th>
                 <th>Proje</th>
-                <th>İzin Tarihi</th>
+                <th>İzin Baslangic</th>
+                <th>İzin Bitiş</th>
                 <th>İşlemler</th>
             </tr>
         </thead>
@@ -71,12 +73,19 @@
                     }
                     echo "<td>" . $personel->getIseBaslamaTarihi() . "</td>";
                     echo "<td>" . $personel->getProje() . "</td>";
-                    if($personel->getIzinTarihi() == "0000-00-00") {
+                    if($personel->getIzinBaslangic() == "0000-00-00") {
                         echo "<td>-</td>";
-                    } else {
-                        echo "<td>" . $personel->getIzinTarihi() . "</td>";
                     }
-                    echo "<td><a class='btn btn-sm btn-secondary' href='editPersonel.php?edit=" . $personel->getId() . "'>Düzenle</a><button class='btn btn-sm btn-danger' onclick='confirmDelete(" . $personel->getId() . ")'>Sil</button></td>";
+                    else {
+                        echo "<td>" . $personel->getIzinBaslangic() . "</td>";
+                    }
+                    if($personel->getIzinBitis() == "0000-00-00") {
+                        echo "<td>-</td>";
+                    }
+                    else {
+                        echo "<td>" . $personel->getIzinBitis() . "</td>";
+                    }
+                    echo "<td><a class='btn btn-sm btn-secondary' href='editPersonel.php?edit=" . $personel->getId() . "'><i class='fa-regular fa-pen-to-square'></i></a><button class='btn btn-sm btn-danger' onclick='confirmDelete(" . $personel->getId() . ")'><i class='fa-regular fa-trash-can'></i></button></td>";
                     echo "</tr>";
                 }
             ?>

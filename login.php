@@ -1,4 +1,17 @@
-<?php include('../code/DbQuerries.php');?>
+<?php
+    session_start();
+    include('code/DbQuerries.php');
+
+    if(isset($_POST['login'])) {
+        $user = new User(0, $_POST['username'], $_POST['password']);
+        if(authorizeUser($user)) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $user->getUsername();
+            header("Location: pages/home.php");
+            exit();
+        }
+    }    
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,7 +19,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PTS Giris</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="login-container">
@@ -25,16 +38,3 @@
     </div>
 </body>
 </html>
-
-<script>
-
-</script>
-
-<?php
-    if(isset($_POST['login'])) {
-        $user = new User(0, $_POST['username'], $_POST['password']);
-        if(authorizeUser($user)) {
-            header("Location: home.php");
-        }
-    }
-?>

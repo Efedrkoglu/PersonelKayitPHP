@@ -1,6 +1,7 @@
-<?php $title = "Departman"?>
+<?php $title = "Departman";?>
 <?php include 'header.php'?>
 <?php include '../code/DbQuerries.php'?>
+<?php include('../code/CheckAuthorized.php')?>
 <?php
     if(isset($_POST['Kaydet'])) {
         $departmentID = $_POST['id'];
@@ -46,6 +47,23 @@
 
     <div class="row">
         <div class="col">
+            <?php
+                $currentDepartment = null;
+                if(isset($_GET['edit'])) {
+                    $departmentId = $_GET['edit'];
+                    $currentDepartment = selectDepartmentById($departmentId);
+                }
+            ?>
+            <h4>Departman Ekle&Düzenle</h4>
+            <form action="" method="POST">
+                <label for="name">Ad</label>
+                <input type="hidden" name="id" value="<?php echo $currentDepartment ? $currentDepartment->getId() : ''; ?>">
+                <input type="text" id="name" name="name" class="form-control" style="text-align: center;" value="<?php echo $currentDepartment ? $currentDepartment->getName() : ''; ?>"><br>
+                <input type="submit" name="Kaydet" value="Kaydet" class="btn btn-success btn-sm text-center">
+            </form>
+        </div>
+        <div class="col">
+            <h4>Departmanlar</h4>
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr align="center">
@@ -60,27 +78,12 @@
                         foreach($departments as $department) {
                             echo "<tr align='center'>";
                             echo "<td>" . $department->getName() . "</td>";
-                            echo "<td><a class='btn btn-sm btn-secondary' href='?edit=" . $department->getId() . "'>Düzenle</a><button class='btn btn-sm btn-danger' onclick='confirmDelete(" . $department->getId() . ")'>Sil</button></td>";
+                            echo "<td><a class='btn btn-sm btn-secondary' href='?edit=" . $department->getId() . "'><i class='fa-regular fa-pen-to-square'></i></a><button class='btn btn-sm btn-danger' onclick='confirmDelete(" . $department->getId() . ")'><i class='fa-regular fa-trash-can'></button></td>";
                             echo "</tr>";
                         }
                     ?>
                 </tbody>
             </table>
-        </div>
-        <div class="col">
-            <?php
-                $currentDepartment = null;
-                if(isset($_GET['edit'])) {
-                    $departmentId = $_GET['edit'];
-                    $currentDepartment = selectDepartmentById($departmentId);
-                }
-            ?>
-            <form action="" method="POST">
-                <label for="name">Ad</label>
-                <input type="hidden" name="id" value="<?php echo $currentDepartment ? $currentDepartment->getId() : ''; ?>">
-                <input type="text" id="name" name="name" class="form-control" style="text-align: center;" value="<?php echo $currentDepartment ? $currentDepartment->getName() : ''; ?>"><br>
-                <input type="submit" name="Kaydet" value="Kaydet" class="btn btn-success btn-sm text-center">
-            </form>
         </div>
     </div>
     <hr>

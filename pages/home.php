@@ -1,8 +1,14 @@
 <?php $title = "Ana Sayfa"; ?>
 <?php include 'header.php'; ?>
+<?php include '../code/DbQuerries.php'?>
+<?php include('../code/CheckAuthorized.php')?>
 
 <div class="container mt-5">
+    
     <div class="row mb-4">
+        <div class="col">
+            <h4>Hoşgeldiniz <?php echo $_SESSION['username'];?></h4>
+        </div>
         <div class="col text-end">
             <div class="datetime-container">
                 <div class="date" id="date"></div>
@@ -20,13 +26,20 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        <li class="list-group-item">Emre Kayhan</li>
-                        <li class="list-group-item">Efe Durukoğlu</li>
-                        <li class="list-group-item">Mehmet Hoca</li>
+                        <?php 
+                            $personels = selectLeavePersonel();
+
+                            foreach($personels as $personel) {
+                                echo "<li class='list-group-item'>" . $personel->getAd() . " " . $peronsel->getSoyad() . "</li>";
+                            }
+                        ?>
                     </ul>
                 </div>
             </div>
         </div>
+    </div>
+    <div>
+        <a href="../logout.php" class="btn btn-danger btn-sm" style="font-weigth: bold;">Çıkış <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
     </div>
 </div>
 

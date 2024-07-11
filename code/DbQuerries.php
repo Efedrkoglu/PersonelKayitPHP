@@ -2,13 +2,15 @@
     include("DbConnection.php");
     include("Personel.php");
     include("User.php");
+    include("Gelir.php");
+    include("Gider.php");
 
     function insertPersonel(Personel $personel) {
         try {
             $connection = connect();
-            $sql = "INSERT INTO personel VALUES(DEFAULT, '{$personel->getAd()}', '{$personel->getSoyad()}',
+            $sql = "INSERT INTO personelTable VALUES(DEFAULT, '{$personel->getAd()}', '{$personel->getSoyad()}',
                     '{$personel->getCinsiyet()}', '{$personel->getDogumTarihi()}', {$personel->getDepartment()->getId()},
-                    '{$personel->getUnvan()->getId()}', '{$personel->getIseBaslamaTarihi()}', '{$personel->getIzinTarihi()}', '{$personel->getProje()}')";
+                    '{$personel->getUnvan()->getId()}', '{$personel->getIseBaslamaTarihi()}', '{$personel->getIzinBaslangic()}', '{$personel->getIzinBitis()}', '{$personel->getProje()}')";
             
             $result = $connection->exec($sql);
         }
@@ -20,11 +22,11 @@
     function updatePersonel(Personel $personel) {
         try {
             $connection = connect();
-            $sql = "UPDATE personel SET ad='{$personel->getAd()}', soyad='{$personel->getSoyad()}', 
+            $sql = "UPDATE personelTable SET ad='{$personel->getAd()}', soyad='{$personel->getSoyad()}', 
                     cinsiyet='{$personel->getCinsiyet()}', dogum_tarihi='{$personel->getDogumTarihi()}', 
                     department_id={$personel->getDepartment()->getId()}, unvan_id='{$personel->getUnvan()->getId()}', 
-                    ise_baslama_tarihi='{$personel->getIseBaslamaTarihi()}', izin_tarihi='{$personel->getIzinTarihi()}', 
-                    proje='{$personel->getProje()}' WHERE id={$personel->getId()}";
+                    ise_baslama_tarihi='{$personel->getIseBaslamaTarihi()}', izin_baslangic='{$personel->getIzinBaslangic()}', 
+                    izin_bitis='{$personel->getIzinBitis()}', proje='{$personel->getProje()}' WHERE id={$personel->getId()}";
             
             $result = $connection->exec($sql);
         }
@@ -36,7 +38,7 @@
     function deletePersonel(Personel $personel) {
         try {
             $connection = connect();
-            $sql = "DELETE FROM personel WHERE id={$personel->getId()}";
+            $sql = "DELETE FROM personelTable WHERE id={$personel->getId()}";
             
             $result = $connection->exec($sql);
         }
@@ -48,7 +50,7 @@
     function selectPersonel() {
         try {
             $connection = connect();
-            $sql = "SELECT * FROM personel";
+            $sql = "SELECT * FROM personelTable";
             
             $result = $connection->query($sql);
             $personels = array();
@@ -63,7 +65,8 @@
                         selectDepartmentById($row['department_id']),
                         selectUnvanById($row['unvan_id']),
                         $row['ise_baslama_tarihi'],
-                        $row['izin_tarihi'],
+                        $row['izin_baslangic'],
+                        $row['izin_bitis'],
                         $row['proje']
                     );
                 }
@@ -77,7 +80,8 @@
                         new Department(0, "null"),
                         selectUnvanById($row['unvan_id']),
                         $row['ise_baslama_tarihi'],
-                        $row['izin_tarihi'],
+                        $row['izin_baslangic'],
+                        $row['izin_bitis'],
                         $row['proje']
                     );
                 }
@@ -91,7 +95,8 @@
                         selectDepartmentById($row['department_id']),
                         new Unvan(0, "null"),
                         $row['ise_baslama_tarihi'],
-                        $row['izin_tarihi'],
+                        $row['izin_baslangic'],
+                        $row['izin_bitis'],
                         $row['proje']
                     );
                 }
@@ -105,7 +110,8 @@
                         new Department(0, "null"),
                         new Unvan(0, "null"),
                         $row['ise_baslama_tarihi'],
-                        $row['izin_tarihi'],
+                        $row['izin_baslangic'],
+                        $row['izin_bitis'],
                         $row['proje']
                     );
                 }
@@ -121,7 +127,7 @@
     function selectPersonelById($id) {
         try {
             $connection = connect();
-            $sql = "SELECT * FROM personel WHERE id={$id}";
+            $sql = "SELECT * FROM personelTable WHERE id={$id}";
 
             $result = $connection->query($sql);
             $row = $result->fetch();
@@ -135,7 +141,8 @@
                     selectDepartmentById($row['department_id']),
                     selectUnvanById($row['unvan_id']),
                     $row['ise_baslama_tarihi'],
-                    $row['izin_tarihi'],
+                    $row['izin_baslangic'],
+                    $row['izin_bitis'],
                     $row['proje']
                 );
             }
@@ -149,7 +156,8 @@
                     new Department(0, "null"),
                     selectUnvanById($row['unvan_id']),
                     $row['ise_baslama_tarihi'],
-                    $row['izin_tarihi'],
+                    $row['izin_baslangic'],
+                    $row['izin_bitis'],
                     $row['proje']
                 );
             }
@@ -163,7 +171,8 @@
                     selectDepartmentById($row['department_id']),
                     new Unvan(0, "null"),
                     $row['ise_baslama_tarihi'],
-                    $row['izin_tarihi'],
+                    $row['izin_baslangic'],
+                    $row['izin_bitis'],
                     $row['proje']
                 );
             }
@@ -177,7 +186,8 @@
                     new Department(0, "null"),
                     new Unvan(0, "null"),
                     $row['ise_baslama_tarihi'],
-                    $row['izin_tarihi'],
+                    $row['izin_baslangic'],
+                    $row['izin_bitis'],
                     $row['proje']
                 );
             }
@@ -186,6 +196,80 @@
         catch(PDOException $e) {
             die($e->getMessage());
         } 
+    }
+
+    function selectLeavePersonel() {
+        try {
+            $connection = connect();
+            $sql = "SELECT * FROM personelTable WHERE NOT izin_bitis = '0000-00-00'";
+
+            $result = $connection->query($sql);
+            $row = $result->fetch();
+            if($row['department_id'] != NULL && $row['unvan_id'] != NULL) {
+                $personel = new Personel(
+                    $row['id'],
+                    $row['ad'],
+                    $row['soyad'],
+                    $row['cinsiyet'],
+                    $row['dogum_tarihi'],
+                    selectDepartmentById($row['department_id']),
+                    selectUnvanById($row['unvan_id']),
+                    $row['ise_baslama_tarihi'],
+                    $row['izin_baslangic'],
+                    $row['izin_bitis'],
+                    $row['proje']
+                );
+            }
+            else if($row['department_id'] == NULL){
+                $personel = new Personel(
+                    $row['id'],
+                    $row['ad'],
+                    $row['soyad'],
+                    $row['cinsiyet'],
+                    $row['dogum_tarihi'],
+                    new Department(0, "null"),
+                    selectUnvanById($row['unvan_id']),
+                    $row['ise_baslama_tarihi'],
+                    $row['izin_baslangic'],
+                    $row['izin_bitis'],
+                    $row['proje']
+                );
+            }
+            else if($row['unvan_id'] == NULL) {
+                $personel = new Personel(
+                    $row['id'],
+                    $row['ad'],
+                    $row['soyad'],
+                    $row['cinsiyet'],
+                    $row['dogum_tarihi'],
+                    selectDepartmentById($row['department_id']),
+                    new Unvan(0, "null"),
+                    $row['ise_baslama_tarihi'],
+                    $row['izin_baslangic'],
+                    $row['izin_bitis'],
+                    $row['proje']
+                );
+            }
+            else {
+                $personel = new Personel(
+                    $row['id'],
+                    $row['ad'],
+                    $row['soyad'],
+                    $row['cinsiyet'],
+                    $row['dogum_tarihi'],
+                    new Department(0, "null"),
+                    new Unvan(0, "null"),
+                    $row['ise_baslama_tarihi'],
+                    $row['izin_baslangic'],
+                    $row['izin_bitis'],
+                    $row['proje']
+                );
+            }
+            return $personel;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
     }
 
     function insertDepartment(Department $department) {
@@ -284,6 +368,162 @@
             $row = $result->fetch();
             $unvan = new Unvan($row['id'], $row['name']);
             return $unvan;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function insertGelir(Gelir $gelir) {
+        try {
+            $connection = connect();
+            $sql = "INSERT INTO gelir VALUES(DEFAULT, '{$gelir->ad}', {$gelir->miktar}, '{$gelir->aciklama}'
+                    , '{$gelir->tarih}')";
+            
+            $result = $connection->exec($sql);
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function updateGelir(Gelir $gelir) {
+        try {
+            $connection = connect();
+            $sql = "UPDATE gelir SET ad='{$gelir->ad}', miktar={$gelir->miktar}, aciklama='{$gelir->aciklama}'
+                    , tarih='{$gelir->tarih}' WHERE id={$gelir->id}";
+            
+            $result = $connection->exec($sql);
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function deleteGelir(Gelir $gelir) {
+        try {
+            $connection = connect();
+            $sql = "DELETE FROM gelir WHERE id={$gelir->id}";
+            
+            $result = $connection->exec($sql);
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function selectGelir() {
+        try {
+            $connection = connect();
+            $sql = "SELECT * FROM gelir";
+
+            $result = $connection->query($sql);
+            $gelirler = array();
+            while($row = $result->fetch()) {
+                $gelir = new Gelir(
+                    $row['id'],
+                    $row['ad'],
+                    $row['miktar'],
+                    $row['aciklama'],
+                    $row['tarih']
+                );
+                array_push($gelirler, $gelir);
+            }
+            return $gelirler;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function selectGelirById($id) {
+        try {
+            $connection = connect();
+            $sql = "SELECT * FROM gelir WHERE id={$id}";
+
+            $result = $connection->query($sql);
+            $row = $result->fetch();
+            
+            $gelir = new Gelir($row['id'], $row['ad'], $row['miktar'], $row['aciklama'], $row['tarih']);
+            return $gelir;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function insertGider(Gider $gider) {
+        try {
+            $connection = connect();
+            $sql = "INSERT INTO gider VALUES(DEFAULT, '{$gider->ad}', {$gider->miktar}, '{$gider->aciklama}'
+                    , '{$gider->tarih}')";
+            
+            $result = $connection->exec($sql);
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function updateGider(Gider $gider) {
+        try {
+            $connection = connect();
+            $sql = "UPDATE gider SET ad='{$gider->ad}', miktar={$gider->miktar}, aciklama='{$gider->aciklama}'
+                    , tarih='{$gider->tarih}' WHERE id={$gider->id}";
+            
+            $result = $connection->exec($sql);
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function deleteGider(Gider $gider) {
+        try {
+            $connection = connect();
+            $sql = "DELETE FROM gider WHERE id={$gider->id}";
+            
+            $result = $connection->exec($sql);
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function selectGider() {
+        try {
+            $connection = connect();
+            $sql = "SELECT * FROM gider";
+
+            $result = $connection->query($sql);
+            $giderler = array();
+            while($row = $result->fetch()) {
+                $gider = new Gider(
+                    $row['id'],
+                    $row['ad'],
+                    $row['miktar'],
+                    $row['aciklama'],
+                    $row['tarih']
+                );
+                array_push($giderler, $gider);
+            }
+            return $giderler;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function selectGiderById($id) {
+        try {
+            $connection = connect();
+            $sql = "SELECT * FROM gider WHERE id={$id}";
+
+            $result = $connection->query($sql);
+            $row = $result->fetch();
+            
+            $gider = new Gider($row['id'], $row['ad'], $row['miktar'], $row['aciklama'], $row['tarih']);
+            return $gider;
         }
         catch(PDOException $e) {
             die($e->getMessage());
