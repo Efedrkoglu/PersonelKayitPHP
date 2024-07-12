@@ -21,23 +21,27 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="personelList.php">Personel Listesi</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="addPersonel.php">Personel Ekle</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Personel
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="personelList.php">Personel Listesi</a></li>
+                <li><a class="dropdown-item" href="addPersonel.php">Personel Ekle</a></li>
+              </ul>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="departmentPage.php">Departman</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="gelirList.php">Gelirler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="giderList.php">Giderler</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="addGelirGider.php">Gelir&Gider Ekle</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Gelir&Gider
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="gelirList.php">Gelirler</a></li>
+                <li><a class="dropdown-item" href="giderList.php">Giderler</a></li>
+                <li><a class="dropdown-item" href="addGelirGider.php">Gelir&Gider Ekle</a></li>
+              </ul>
             </li>
           </ul>
         </div>
