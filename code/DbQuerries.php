@@ -418,7 +418,7 @@
     function selectGelir() {
         try {
             $connection = connect();
-            $sql = "SELECT * FROM gelir";
+            $sql = "SELECT * FROM gelir ORDER BY YEAR(tarih) DESC";
 
             $result = $connection->query($sql);
             $gelirler = array();
@@ -449,6 +449,40 @@
             
             $gelir = new Gelir($row['id'], $row['ad'], $row['miktar'], $row['aciklama'], $row['tarih']);
             return $gelir;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function selectTotalGelirByYear() {
+        try {
+            $connection = connect();
+            $sql = "SELECT YEAR(tarih) AS year, sum(miktar) AS total FROM gelir GROUP BY YEAR(tarih)";
+
+            $result = $connection->query($sql);
+            $yearAndTotal = array();
+            while($row = $result->fetch()) {
+                $yearAndTotal[$row['year']] = $row['total'];
+            }
+            return $yearAndTotal;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function selectTotalGelirByName() {
+        try {
+            $connection = connect();
+            $sql = "SELECT ad AS name, sum(miktar) AS total FROM gelir GROUP BY ad";
+
+            $result = $connection->query($sql);
+            $nameAndTotal = array();
+            while($row = $result->fetch()) {
+                $nameAndTotal[$row['name']] = $row['total'];
+            }
+            return $nameAndTotal;
         }
         catch(PDOException $e) {
             die($e->getMessage());
@@ -496,7 +530,7 @@
     function selectGider() {
         try {
             $connection = connect();
-            $sql = "SELECT * FROM gider";
+            $sql = "SELECT * FROM gider ORDER BY YEAR(tarih) DESC";
 
             $result = $connection->query($sql);
             $giderler = array();
@@ -532,6 +566,41 @@
             die($e->getMessage());
         }
     }
+
+    function selectTotalGiderByYear() {
+        try {
+            $connection = connect();
+            $sql = "SELECT YEAR(tarih) AS year, sum(miktar) AS total FROM gider GROUP BY YEAR(tarih)";
+
+            $result = $connection->query($sql);
+            $yearAndTotal = array();
+            while($row = $result->fetch()) {
+                $yearAndTotal[$row['year']] = $row['total'];
+            }
+            return $yearAndTotal;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function selectTotalGiderByName() {
+        try {
+            $connection = connect();
+            $sql = "SELECT ad as name, sum(miktar) AS total FROM gider GROUP BY ad";
+
+            $result = $connection->query($sql);
+            $nameAndTotal = array();
+            while($row = $result->fetch()) {
+                $nameAndTotal[$row['name']] = $row['total'];
+            }
+            return $nameAndTotal;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
 
     function authorizeUser(User $user) {
         try {
