@@ -35,12 +35,21 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Gelir&Gider
+              Gelir-Gider
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="gelirList.php">Gelirler</a></li>
-                <li><a class="dropdown-item" href="giderList.php">Giderler</a></li>
-                <li><a class="dropdown-item" href="addGelirGider.php">Gelir&Gider Ekle</a></li>
+                <li><a class="dropdown-item" href="gelirList.php">Gelir Tablosu</a></li>
+                <li><a class="dropdown-item" href="giderList.php">Gider Tablosu</a></li>
+                <li><a class="dropdown-item" href="addGelirGider.php">Gelir-Gider Ekle</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Analiz
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="gelirAnaliz.php">Gelir Analizi</a></li>
+                <li><a class="dropdown-item" href="giderAnaliz.php">Gider Analizi</a></li>
               </ul>
             </li>
           </ul>

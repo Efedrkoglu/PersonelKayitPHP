@@ -472,6 +472,23 @@
         }
     }
 
+    function selectTotalGelirByMonth($year) {
+        try {
+            $connection = connect();
+            $sql = "SELECT month(tarih) AS month, sum(miktar) AS total FROM (SELECT * FROM gelir WHERE year(tarih) = '{$year}') AS x GROUP BY month(tarih)";
+
+            $result = $connection->query($sql);
+            $monthTotal = array();
+            while($row = $result->fetch()) {
+                $monthTotal[$row['month']] = $row['total'];
+            }
+            return $monthTotal;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
     function selectTotalGelirByName() {
         try {
             $connection = connect();
@@ -584,6 +601,23 @@
         }
     }
 
+    function selectTotalGiderByMonth() {
+        try {
+            $connection = connect();
+            $sql = "SELECT month(tarih) AS month, sum(miktar) AS total FROM (SELECT * FROM gider WHERE year(tarih) = '2023') AS x GROUP BY month(tarih)";
+
+            $result = $connection->query($sql);
+            $monthTotal = array();
+            while($row = $result->fetch()) {
+                $monthTotal[$row['month']] = $row['total'];
+            }
+            return $monthTotal;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
     function selectTotalGiderByName() {
         try {
             $connection = connect();
@@ -601,6 +635,23 @@
         }
     }
 
+    function selectYears($table) {
+        try {
+            $connection = connect();
+            $sql = "SELECT YEAR(tarih) AS years FROM {$table} GROUP BY YEAR(tarih)";
+
+            $result = $connection->query($sql);
+            $years = array();
+            while($row = $result->fetch()) {
+                array_push($years, $row['years']);
+            }
+
+            return $years;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
 
     function authorizeUser(User $user) {
         try {

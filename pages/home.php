@@ -33,7 +33,16 @@
                     <ul class="list-group">
                         <?php
                             foreach($personels as $personel) {
-                                echo "<li class='list-group-item'>" . $personel->getAd() . " " . $personel->getSoyad() . "</li>";
+                                $izinBaslangic = new DateTime($personel->getIzinBaslangic());
+                                $izinBitis = new DateTime($personel->getIzinBitis());
+                                $interval = $izinBaslangic->diff($izinBitis);
+                                $izinSuresi = $interval->days;
+
+                                $formattedIzinBaslangic = $izinBaslangic->format('d-m-Y');
+                                $formattedIzinBitis = $izinBitis->format('d-m-Y');
+
+                                echo "<li class='list-group-item'>" . $personel->getAd() . " " . $personel->getSoyad() . 
+                                " şu tarihlerde " . $formattedIzinBaslangic . "/" . $formattedIzinBitis . " " . ($izinSuresi + 1) . " gün izinli</li>";
                             }
                         ?>
                     </ul>
@@ -120,8 +129,8 @@
                 labels: years,
                 datasets: [{
                     label: 'Gelirler',
-                    borderColor: "rgba(0,255,0,0.5)",
-                    pointBorderColor: "rgba(0,255,0,1)",
+                    borderColor: "rgba(76, 175, 80, 0.5)",
+                    pointBorderColor: "rgba(76, 175, 80, 1)",
                     fill: false,
                     data: gelirler
                 }]
@@ -181,10 +190,11 @@
             data: {
                 labels: names,
                 datasets: [{
+                    label: 'Gelirler',
                     fill: false,
                     data: gelirler,
-                    backgroundColor: 'rgba(0,255,0, 0.1)',
-                    borderColor: 'rgb(0,255,0)',
+                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                    borderColor: 'rgb(76, 175, 80)',
                     borderWidth: 1
                 }]
             },
@@ -212,6 +222,7 @@
             data: {
                 labels: names,
                 datasets: [{
+                    label: 'Giderler',
                     fill: false,
                     data: giderler,
                     backgroundColor: 'rgba(255,0,0, 0.1)',
