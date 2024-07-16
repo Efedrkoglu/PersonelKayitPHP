@@ -24,7 +24,7 @@
 <div class="container mt-5">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">.... Yılı Aylık Giderler</h5>
+            <h5 class="card-title">Aylık Giderler</h5>
             <canvas id="grafikGiderler" style="width:100%;"></canvas>
         </div>
     </div>

@@ -100,9 +100,9 @@
             ?>
         </tbody>
     </table>
-    <a href="?page=<?php echo max(1, $page - 1); ?>" class="btn btn-secondary btn-sm <?php if($page == 1) echo 'disabled';?>">Prev</a>
+    <a href="?page=<?php echo max(1, $page - 1); ?>" class="btn btn-secondary btn-sm <?php if($page == 1) echo 'disabled';?>"><i class="fa-solid fa-arrow-left"></i></a>
     <?php echo $page . "/" . $maxPage; ?>
-    <a href="?page=<?php echo min($maxPage, $page + 1); ?>" class="btn btn-secondary btn-sm <?php if($page == $maxPage) echo 'disabled';?>">Next</a>
+    <a href="?page=<?php echo min($maxPage, $page + 1); ?>" class="btn btn-secondary btn-sm <?php if($page == $maxPage) echo 'disabled';?>"><i class="fa-solid fa-arrow-right"></i></a>
 </div>
 
 <script>
