@@ -1,12 +1,15 @@
+<?php $title = "Gelir Analizi";?>
 <?php include('header.php')?>
 <?php include('../code/DbQuerries.php')?>
+<?php include('../code/CheckAuthorized.php')?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
 <div class="container mt-5">
     <form action="">
         <div class="row">
             <div class="col">
-                <select class="form-select" name="year">
+                <select class="form-select" name="year" id="yearSelect">
+                    <option value="" disabled selected>Yıllar</option>
                     <?php
                         $years = selectYears("gelir");
                         foreach($years as $year) {
@@ -28,31 +31,47 @@
 </div>
 
 <script>
-    const months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
-    const gelirler = [3, 5, 3, 1, 4, 6, 7, 3, 8, 4, 6, 9];
+    async function fetchGelirDataByMonth(year) {
+        const response = await fetch(`../code/GetGelirDataByMonth.php?year=${year}`);
+        const data = await response.json();
+        return data;
+    }
 
-    const grafikGelirler = document.getElementById("grafikGelirler").getContext("2d");
-    new Chart(grafikGelirler, {
-        type: "line",
-        data: {
-            labels: months,
-            datasets: [{
-                label: 'Gelirler',
-                borderColor: "rgba(76, 175, 80, 0.5)",
-                pointBorderColor: "rgba(76, 175, 80, 1)",
-                fill: false,
-                data: gelirler
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
+    async function drawGelirCharts(year) {
+        const gelirData = await fetchGelirDataByMonth(year);
+
+        const months = Object.keys(gelirData);
+        const gelirler = Object.values(gelirData).map(value => parseFloat(value));
+
+        const grafikGelirler = document.getElementById("grafikGelirler").getContext("2d");
+        new Chart(grafikGelirler, {
+            type: "line",
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'Gelirler',
+                    borderColor: "rgba(76, 175, 80, 0.5)",
+                    pointBorderColor: "rgba(76, 175, 80, 1)",
+                    fill: false,
+                    data: gelirler
                 }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
             }
-        }
+        });
+    }
+
+    
+    document.getElementById('yearSelect').addEventListener('change', function() {
+        var selectedYear = this.value;
+        drawGelirCharts(selectedYear);
     });
 </script>
 

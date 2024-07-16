@@ -1,4 +1,4 @@
-<?php $title = "Gelirler";?>
+<?php $title = "Giderler";?>
 <?php include('header.php')?>
 <?php include('../code/CheckAuthorized.php')?>
 <?php include('../code/DbQuerries.php')?>

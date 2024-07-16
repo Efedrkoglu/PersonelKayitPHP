@@ -601,10 +601,10 @@
         }
     }
 
-    function selectTotalGiderByMonth() {
+    function selectTotalGiderByMonth($year) {
         try {
             $connection = connect();
-            $sql = "SELECT month(tarih) AS month, sum(miktar) AS total FROM (SELECT * FROM gider WHERE year(tarih) = '2023') AS x GROUP BY month(tarih)";
+            $sql = "SELECT month(tarih) AS month, sum(miktar) AS total FROM (SELECT * FROM gider WHERE year(tarih) = '{$year}') AS x GROUP BY month(tarih)";
 
             $result = $connection->query($sql);
             $monthTotal = array();
@@ -656,7 +656,7 @@
     function authorizeUser(User $user) {
         try {
             $connection = connect();
-            $sql = "SELECT * FROM users WHERE username='{$user->getUsername()}' AND password='{$user->getPassword()}'";
+            $sql = "SELECT * FROM users WHERE BINARY username='{$user->getUsername()}' AND BINARY password='{$user->getPassword()}'";
 
             $result = $connection->query($sql);
             $row = $result->fetchAll();
