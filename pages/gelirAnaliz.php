@@ -31,6 +31,11 @@
 </div>
 
 <script>
+    const monthNames = [
+        'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 
+        'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
+    ];
+    
     async function fetchGelirDataByMonth(year) {
         const response = await fetch(`../code/GetGelirDataByMonth.php?year=${year}`);
         const data = await response.json();
@@ -40,7 +45,7 @@
     async function drawGelirCharts(year) {
         const gelirData = await fetchGelirDataByMonth(year);
 
-        const months = Object.keys(gelirData);
+        const months = Object.keys(gelirData).map(month => monthNames[parseInt(month) - 1]);
         const gelirler = Object.values(gelirData).map(value => parseFloat(value));
 
         const grafikGelirler = document.getElementById("grafikGelirler").getContext("2d");
