@@ -3,18 +3,21 @@
 <?php include '../code/DbQuerries.php'?>
 <?php include('../code/CheckAuthorized.php')?>
 <?php $personels = selectLeavePersonel();?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 
+
+
+<link rel="stylesheet" href="styles.css">
 <div class="container mt-5">
     
     <div class="row mb-4">
         <div class="col">
-            <h4>Hoşgeldiniz <?php echo $_SESSION['username'];?></h4>
-            <div>
-                <a href="../logout.php" class="btn btn-danger btn-sm" style="font-weigth: bold;">Çıkış <i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>Hoşgeldiniz <?php echo $_SESSION['username'];?></h4>
+                <a href="../logout.php" class="btn btn-danger btn-sm">Çıkış <i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
-        <div class="col text-end">
+        <div class="col-auto">
             <div class="datetime-container">
                 <div class="date" id="date"></div>
                 <div class="time" id="time"></div>
@@ -31,8 +34,8 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        <?php
-                            foreach($personels as $personel) {
+                        <?php foreach($personels as $personel): ?>
+                            <?php
                                 $izinBaslangic = new DateTime($personel->getIzinBaslangic());
                                 $izinBitis = new DateTime($personel->getIzinBitis());
                                 $interval = $izinBaslangic->diff($izinBitis);
@@ -40,50 +43,49 @@
 
                                 $formattedIzinBaslangic = $izinBaslangic->format('d-m-Y');
                                 $formattedIzinBitis = $izinBitis->format('d-m-Y');
-
-                                echo "<li class='list-group-item'>" . $personel->getAd() . " " . $personel->getSoyad() . 
-                                " şu tarihlerde " . $formattedIzinBaslangic . "/" . $formattedIzinBitis . " " . ($izinSuresi + 1) . " gün izinli</li>";
-                            }
-                        ?>
+                            ?>
+                            <li class="list-group-item">
+                                <strong><?php echo $personel->getAd() . " " . $personel->getSoyad(); ?></strong> şu tarihlerde 
+                                <?php echo $formattedIzinBaslangic . "/" . $formattedIzinBitis . " " . ($izinSuresi + 1) . " gün izinli"; ?>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 
+    
     <div class="row mb-4">
-        <div class="col">
+        <div class="col-md-6 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Yıllara Göre Toplam Gelir</h5>
-                    <canvas id="grafikGelirler" style="width:100%;max-width:700px"></canvas>
+                    <canvas id="grafikGelirler" style="max-width:100%;"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-md-6 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Yıllara Göre Toplam Gider</h5>
-                    <canvas id="grafikGiderler" style="width:100%;max-width:700px"></canvas>
+                    <canvas id="grafikGiderler" style="max-width:100%;"></canvas>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="row mb-4">
-        <div class="col">
+        <div class="col-md-6 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Gelirler</h5>
-                    <canvas id="grafikGelirler2" style="width:100%;max-width:700px"></canvas>
+                    <canvas id="grafikGelirler2" style="max-width:100%;"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col">
+        <div class="col-md-6 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Giderler</h5>
-                    <canvas id="grafikGiderler2" style="width:100%;max-width:700px"></canvas>
+                    <canvas id="grafikGiderler2" style="max-width:100%;"></canvas>
                 </div>
             </div>
         </div>
@@ -137,11 +139,9 @@
             },
             options: {
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
         });
@@ -168,11 +168,9 @@
             },
             options: {
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
         });
@@ -191,20 +189,17 @@
                 labels: names,
                 datasets: [{
                     label: 'Gelirler',
-                    fill: false,
-                    data: gelirler,
-                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                    backgroundColor: 'rgba(76, 175, 80, 0.5)',
                     borderColor: 'rgb(76, 175, 80)',
-                    borderWidth: 1
+                    borderWidth: 1,
+                    data: gelirler
                 }]
             },
             options: {
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
         });
@@ -223,25 +218,21 @@
                 labels: names,
                 datasets: [{
                     label: 'Giderler',
-                    fill: false,
-                    data: giderler,
-                    backgroundColor: 'rgba(255,0,0, 0.1)',
-                    borderColor: 'rgb(255,0,0)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                    borderColor: 'rgb(255, 0, 0)',
+                    borderWidth: 1,
+                    data: giderler
                 }]
             },
             options: {
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
         });
     }
-
 
     function updateDateTime() {
         const dateElement = document.getElementById('date');
@@ -256,8 +247,8 @@
             hour: '2-digit', minute: '2-digit', second: '2-digit', ...options
         });
 
-        dateElement.innerHTML = dateFormatter.format(now);
-        timeElement.innerHTML = timeFormatter.format(now);
+        dateElement.textContent = dateFormatter.format(now);
+        timeElement.textContent = timeFormatter.format(now);
     }
 
     setInterval(updateDateTime, 1000);
