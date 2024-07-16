@@ -14,7 +14,6 @@
         <div class="col">
             <div class="d-flex justify-content-between align-items-center">
                 <h4>Hoşgeldiniz <?php echo $_SESSION['username'];?></h4>
-                <a href="../logout.php" class="btn btn-danger btn-sm">Çıkış <i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
         <div class="col-auto">

@@ -24,13 +24,17 @@ if(isset($_POST['login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PTS Giriş</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script>
+        function showError(message) {
+            if (message) {
+                alert(message);
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="login-container">
         <h2>Personel Takip Sistemine Hoşgeldiniz</h2>
-        <?php if ($error_message): ?>
-            <p class="error-message"><?php echo $error_message; ?></p>
-        <?php endif; ?>
         <form action="" method="POST">
             <div class="form-group">
                 <label for="username">Kullanıcı Adı:</label>
@@ -43,5 +47,11 @@ if(isset($_POST['login'])) {
             <input class="loginBtn" type="submit" name="login" value="Giriş Yap">
         </form>
     </div>
+    <?php if ($error_message): ?>
+        <script>
+            showError('<?php echo $error_message; ?>');
+        </script>
+    <?php endif; ?>
 </body>
 </html>
+

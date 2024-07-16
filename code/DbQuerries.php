@@ -47,10 +47,10 @@
         }
     }
 
-    function selectPersonel() {
+    function selectPersonel($page) {
         try {
             $connection = connect();
-            $sql = "SELECT * FROM personelTable";
+            $sql = "SELECT * FROM personelTable LIMIT 10 OFFSET " . ($page-1) * 10;
             
             $result = $connection->query($sql);
             $personels = array();
@@ -415,10 +415,10 @@
         }
     }
 
-    function selectGelir() {
+    function selectGelir($page) {
         try {
             $connection = connect();
-            $sql = "SELECT * FROM gelir ORDER BY YEAR(tarih) DESC";
+            $sql = "SELECT * FROM gelir ORDER BY YEAR(tarih) DESC LIMIT 10 OFFSET " . ($page-1) * 10;
 
             $result = $connection->query($sql);
             $gelirler = array();
@@ -544,10 +544,10 @@
         }
     }
 
-    function selectGider() {
+    function selectGider($page) {
         try {
             $connection = connect();
-            $sql = "SELECT * FROM gider ORDER BY YEAR(tarih) DESC";
+            $sql = "SELECT * FROM gider ORDER BY YEAR(tarih) DESC LIMIT 10 OFFSET " . ($page-1) * 10;
 
             $result = $connection->query($sql);
             $giderler = array();
@@ -650,6 +650,21 @@
         }
         catch(PDOException $e) {
             die($e->getMessage());
+        }
+    }
+
+    function getMaxPage($table) {
+        try{
+            $connection = connect();
+            $sql = "SELECT COUNT(id) AS count FROM {$table}";
+
+            $result = $connection->query($sql);
+            $row = $result->fetch();
+            $maxPage = ceil($row['count'] / 10);
+            return $maxPage;
+        }
+        catch(PDOException $e) {
+            die($e-getMessage());
         }
     }
 

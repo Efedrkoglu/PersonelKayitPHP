@@ -12,49 +12,54 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="home.php">PTS</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Personel
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="personelList.php">Personel Listesi</a></li>
-                <li><a class="dropdown-item" href="addPersonel.php">Personel Ekle</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="departmentPage.php">Departman</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Gelir-Gider
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="gelirList.php">Gelir Tablosu</a></li>
-                <li><a class="dropdown-item" href="giderList.php">Gider Tablosu</a></li>
-                <li><a class="dropdown-item" href="addGelirGider.php">Gelir-Gider Ekle</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Analiz
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="gelirAnaliz.php">Gelir Analizi</a></li>
-                <li><a class="dropdown-item" href="giderAnaliz.php">Gider Analizi</a></li>
-              </ul>
-            </li>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="home.php">PTS</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Personel
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="personelList.php">Personel Listesi</a></li>
+            <li><a class="dropdown-item" href="addPersonel.php">Personel Ekle</a></li>
           </ul>
-        </div>
-      </div>
-    </nav>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="departmentPage.php">Departman</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Gelir-Gider
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="gelirList.php">Gelir Tablosu</a></li>
+            <li><a class="dropdown-item" href="giderList.php">Gider Tablosu</a></li>
+            <li><a class="dropdown-item" href="addGelirGider.php">Gelir-Gider Ekle</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Analiz
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="gelirAnaliz.php">Gelir Analizi</a></li>
+            <li><a class="dropdown-item" href="giderAnaliz.php">Gider Analizi</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a href="../logout.php" class="btn btn-danger btn-sm"><i class="fas fa-sign-out-alt"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
   </body>
 </html>

@@ -4,6 +4,15 @@
 <?php include('../code/DbQuerries.php')?>
 
 <?php
+    $maxPage = getMaxPage("gelir");
+    $page;
+    if(isset($_GET['page'])) {
+        $page = $_GET['page'];
+    }
+    else {
+        $page = 1;
+    }
+
     if(isset($_GET['delete'])) {
         $gelir = selectGelirById($_GET['delete']);
         deleteGelir($gelir);
@@ -44,7 +53,7 @@
             </thead>
             <tbody>
                 <?php
-                    $gelirler = selectGelir();
+                    $gelirler = selectGelir($page);
 
                     foreach($gelirler as $gelir) {
                         echo "<tr align='center'>";
@@ -59,6 +68,9 @@
             </tbody>
         </table>
     </div>
+    <a href="?page=<?php echo max(1, $page - 1); ?>" class="btn btn-secondary btn-sm <?php if($page == 1) echo 'disabled';?>">Prev</a>
+    <?php echo $page . "/" . $maxPage; ?>
+    <a href="?page=<?php echo min($maxPage, $page + 1); ?>" class="btn btn-secondary btn-sm <?php if($page == $maxPage) echo 'disabled';?>">Next</a>
 </div>
 
 <script>
