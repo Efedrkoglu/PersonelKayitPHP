@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="styles.css">
 <div class="container mt-5">
     
-    <div class="row mb-4">
+    <div class="row mb-3">
         <div class="col">
             <div class="d-flex justify-content-between align-items-center">
                 <h4>Hoşgeldiniz <?php echo $_SESSION['username'];?></h4>
@@ -19,7 +19,7 @@
         <div class="col-auto">
             <div class="datetime-container">
                 <div class="date" id="date"></div>
-                <div class="time" id="time"></div>
+                <div class="time text-center" id="time"></div>
             </div>
         </div>
     </div>
