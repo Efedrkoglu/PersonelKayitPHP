@@ -54,7 +54,7 @@
                     $currentDepartment = selectDepartmentById($departmentId);
                 }
             ?>
-            <h4>Departman Ekle&Düzenle</h4>
+            <h5>Departman Ekle&Düzenle</h5>
             <form action="" method="POST">
                 <label for="name">Ad</label>
                 <input type="hidden" name="id" value="<?php echo $currentDepartment ? $currentDepartment->getId() : ''; ?>">
@@ -63,7 +63,7 @@
             </form>
         </div>
         <div class="col">
-            <h4>Departmanlar</h4>
+            <h5>Departmanlar</h5>
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr align="center">

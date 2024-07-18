@@ -9,6 +9,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="../css/navbar.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/ec9bc77c5e.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
@@ -23,9 +24,9 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
         <li class="nav-item">
-            <a class="nav-link mx-lg-2" href="home.php">Anasayfa</a>
+            <a class="nav-link active mx-lg-2" href="home.php">Anasayfa</a>
           </li>
-          <li class="nav-item active dropdown">
+          <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Personel
           </a>
@@ -67,10 +68,9 @@
   </div>
 </nav>
 <div class="container mt-5">
-  <h4>deneme</h4>
+  <h4 style="visibility: hidden;">a</h4>
 </div>
 
 
-<div class="container mt-5">
   
 
