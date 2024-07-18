@@ -1,5 +1,5 @@
 <?php $title = "Personel Listesi"; ?>
-<?php include 'header.php'; ?>
+<?php include 'navbar.php'; ?>
 <?php include('../code/DbQuerries.php')?>
 <?php include('../code/CheckAuthorized.php')?>
 

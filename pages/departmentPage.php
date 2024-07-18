@@ -1,5 +1,5 @@
 <?php $title = "Departman";?>
-<?php include 'header.php'?>
+<?php include 'navbar.php'?>
 <?php include '../code/DbQuerries.php'?>
 <?php include('../code/CheckAuthorized.php')?>
 <?php

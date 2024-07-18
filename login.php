@@ -12,7 +12,7 @@ if(isset($_POST['login'])) {
         header("Location: pages/home.php");
         exit();
     } else {
-        $error_message = 'Hatalı kullanıcı adı veya parola!';
+        $error_message = 'Kullanıcı adı veya şifre hatalı!';
     }
 }    
 ?>
@@ -34,14 +34,14 @@ if(isset($_POST['login'])) {
 </head>
 <body>
     <div class="login-container">
-        <h2>Personel Takip Sistemine Hoşgeldiniz</h2>
+        <h2>Personel Kayıt Takip Sistemi</h2>
         <form action="" method="POST">
             <div class="form-group">
                 <label for="username">Kullanıcı Adı:</label>
                 <input type="text" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="password">Parola:</label>
+                <label for="password">Şifre:</label>
                 <input type="password" id="password" name="password" required>
             </div>
             <input class="loginBtn" type="submit" name="login" value="Giriş Yap">
