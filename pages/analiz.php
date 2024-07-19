@@ -32,7 +32,7 @@
     <div class="row mb-3">
         <div class="col">
             <div class="card">
-                <div class="card-body" style="background-color: rgb(76,175,80); color: white;">
+                <div class="card-body" style="background-color: rgb(76,175,80); color: white; font-size: 20px;">
                     <h5 class="card-title">Toplam gelir</h5>
                     <div id="toplamGelir"></div>
                 </div>
@@ -40,7 +40,7 @@
         </div>
         <div class="col">
             <div class="card">
-                <div class="card-body" style="background-color: rgb(255,0,0); color: white;">
+                <div class="card-body" style="background-color: rgb(255,0,0); color: white; font-size: 20px;">
                     <h5 class="card-title">Toplam gider</h5>
                     <div id="toplamGider"></div>
                 </div>
@@ -184,10 +184,12 @@
         if (netKazanc >= 0) {
             kazancCardElement.style.color = 'white';
             kazancCardElement.style.backgroundColor = 'rgb(76, 175, 80)';
+            kazancCardElement.style.fontSize = '20px';
         } 
         else {
             kazancCardElement.style.color = 'white';
             kazancCardElement.style.backgroundColor = 'rgb(255, 0, 0)';
+            kazancCardElement.style.fontSize = '20px';
         }
     }
 
