@@ -472,6 +472,23 @@
         }
     }
 
+    function selectTotalGelirBySelectedYear($year) {
+        try {
+            $connection = connect();
+            $sql = "SELECT YEAR(tarih) AS year, sum(miktar) AS total FROM gelir WHERE YEAR(tarih) = '{$year}'";
+
+            $result = $connection->query($sql);
+            $yearAndTotal = array();
+            while($row = $result->fetch()) {
+                $yearAndTotal[$row['year']] = $row['total'];
+            }
+            return $yearAndTotal;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
     function selectTotalGelirByMonth($year) {
         try {
             $connection = connect();
@@ -588,6 +605,23 @@
         try {
             $connection = connect();
             $sql = "SELECT YEAR(tarih) AS year, sum(miktar) AS total FROM gider GROUP BY YEAR(tarih)";
+
+            $result = $connection->query($sql);
+            $yearAndTotal = array();
+            while($row = $result->fetch()) {
+                $yearAndTotal[$row['year']] = $row['total'];
+            }
+            return $yearAndTotal;
+        }
+        catch(PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    function selectTotalGiderBySelectedYear($year) {
+        try {
+            $connection = connect();
+            $sql = "SELECT YEAR(tarih) AS year, sum(miktar) AS total FROM gider WHERE YEAR(tarih) = '{$year}'";
 
             $result = $connection->query($sql);
             $yearAndTotal = array();

@@ -48,15 +48,9 @@
             <li><a class="dropdown-item" href="addGelirGider.php">Gelir-Gider Ekle</a></li>
           </ul>
           </li>
-          <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Analiz
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="gelirAnaliz.php">Gelir Analizi</a></li>
-            <li><a class="dropdown-item" href="giderAnaliz.php">Gider Analizi</a></li>
-          </ul>
-        </li>
+          <li class="nav-item">
+            <a class="nav-link mx-lg-2" href="analiz.php">Analiz</a>
+          </li>
           
         </ul>
       </div>
