@@ -33,21 +33,27 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        <?php foreach($personels as $personel): ?>
-                            <?php
-                                $izinBaslangic = new DateTime($personel->getIzinBaslangic());
-                                $izinBitis = new DateTime($personel->getIzinBitis());
-                                $interval = $izinBaslangic->diff($izinBitis);
-                                $izinSuresi = $interval->days;
+                        <?php if(count($personels) != 0):?>
+                            <?php foreach($personels as $personel): ?>
+                                <?php
+                                    $izinBaslangic = new DateTime($personel->getIzinBaslangic());
+                                    $izinBitis = new DateTime($personel->getIzinBitis());
+                                    $interval = $izinBaslangic->diff($izinBitis);
+                                    $izinSuresi = $interval->days;
 
-                                $formattedIzinBaslangic = $izinBaslangic->format('d-m-Y');
-                                $formattedIzinBitis = $izinBitis->format('d-m-Y');
-                            ?>
+                                    $formattedIzinBaslangic = $izinBaslangic->format('d-m-Y');
+                                    $formattedIzinBitis = $izinBitis->format('d-m-Y');
+                                ?>
+                                <li class="list-group-item">
+                                    <strong><?php echo $personel->getAd() . " " . $personel->getSoyad(); ?></strong> şu tarihlerde 
+                                    <?php echo $formattedIzinBaslangic . "/" . $formattedIzinBitis . " " . ($izinSuresi + 1) . " gün izinli"; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php else:?>
                             <li class="list-group-item">
-                                <strong><?php echo $personel->getAd() . " " . $personel->getSoyad(); ?></strong> şu tarihlerde 
-                                <?php echo $formattedIzinBaslangic . "/" . $formattedIzinBitis . " " . ($izinSuresi + 1) . " gün izinli"; ?>
-                            </li>
-                        <?php endforeach; ?>
+                                <strong>İzinli personel yok</strong>
+                            </li> 
+                        <?php endif;?>
                     </ul>
                 </div>
             </div>
