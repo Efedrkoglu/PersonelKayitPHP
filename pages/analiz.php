@@ -171,8 +171,8 @@
         const totalGelir = await fetchGelirDataBySelectedYear(year);
         const totalGider = await fetchGiderDataBySelectedYear(year);
           
-        const gelir = totalGelir[year] == undefined ? 0 : totalGelir[year];
-        const gider = totalGider[year] == undefined ? 0 : totalGider[year];
+        const gelir = totalGelir[year] == undefined ? 0 : parseFloat(totalGelir[year]);
+        const gider = totalGider[year] == undefined ? 0 : parseFloat(totalGider[year]);
         const netKazanc = gelir - gider;
 
         document.getElementById('toplamGelir').innerText = gelir.toLocaleString('tr-TR', {style: 'currency', currency: 'TRY'});
