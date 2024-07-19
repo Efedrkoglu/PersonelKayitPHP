@@ -1,0 +1,43 @@
+body {
+    background-color: rgb(241, 241, 241);
+}
+
+
+form {
+    width: 24%;
+    background-color: white;
+    padding: 50px;
+    border-radius: 20px;
+    margin-top: 150px;  
+}
+
+.btn {
+    width: 100%;
+    border: none;
+    border-radius: 50px;
+    background: rgb(76, 175, 80);
+    color: white;
+}
+
+.btn:hover {
+    color: white;
+    background: rgb(65, 151, 69);
+}
+
+.form-control {
+    color: rgba(0,0,0,0.87);
+    border-bottom-color: rgba(0,0,0,0.42);
+    box-shadow: none !important;
+    border: none;
+    border-bottom: 1px solid;
+    border-radius: 4px 4px 0 0;
+}
+
+h4 {
+    font-weight: 700;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
