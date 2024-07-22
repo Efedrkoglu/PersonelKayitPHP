@@ -55,7 +55,7 @@
         </ul>
       </div>
     </div>
-    <a href="../logout.php" class="logout-button btn btn-danger"><i class="fas fa-sign-out-alt"></i></a>
+    <a href="../logout.php" class="logout-button btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Çıkış"><i class="fas fa-sign-out-alt"></i></a>
     <button class="navbar-toggler pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

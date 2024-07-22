@@ -94,7 +94,7 @@
                     else {
                         echo "<td>" . $personel->getIzinBitis() . "</td>";
                     }
-                    echo "<td><a class='btn btn-sm btn-secondary' href='editPersonel.php?edit=" . $personel->getId() . "'><i class='fa-regular fa-pen-to-square'></i></a><button class='btn btn-sm btn-danger' onclick='confirmDelete(" . $personel->getId() . ")'><i class='fa-regular fa-trash-can'></i></button></td>";
+                    echo "<td><a class='btn btn-sm btn-secondary' data-toggle='tooltip' data-placement='bottom' title='Düzenle' href='editPersonel.php?edit=" . $personel->getId() . "'><i class='fa-regular fa-pen-to-square'></i></a><button class='btn btn-sm btn-danger' data-toggle='tooltip' data-placement='bottom' title='Sil' onclick='confirmDelete(" . $personel->getId() . ")'><i class='fa-regular fa-trash-can'></i></button></td>";
                     echo "</tr>";
                 }
             ?>

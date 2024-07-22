@@ -78,7 +78,7 @@
                         foreach($departments as $department) {
                             echo "<tr align='center'>";
                             echo "<td>" . $department->getName() . "</td>";
-                            echo "<td><a class='btn btn-sm btn-secondary' href='?edit=" . $department->getId() . "'><i class='fa-regular fa-pen-to-square'></i></a><button class='btn btn-sm btn-danger' onclick='confirmDelete(" . $department->getId() . ")'><i class='fa-regular fa-trash-can'></button></td>";
+                            echo "<td><a class='btn btn-sm btn-secondary' data-toggle='tooltip' data-placement='bottom' title='Düzenle' href='?edit=" . $department->getId() . "'><i class='fa-regular fa-pen-to-square'></i></a><button class='btn btn-sm btn-danger' data-toggle='tooltip' data-placement='bottom' title='Sil' onclick='confirmDelete(" . $department->getId() . ")'><i class='fa-regular fa-trash-can'></button></td>";
                             echo "</tr>";
                         }
                     ?>

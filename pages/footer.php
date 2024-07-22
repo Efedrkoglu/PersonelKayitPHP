@@ -1,5 +1,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
     $(document).ready(function() {
       var path = window.location.pathname;
       var page = path.split("/").pop();

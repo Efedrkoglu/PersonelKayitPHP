@@ -62,7 +62,7 @@
                         echo "<td>" . $gider->miktar . "₺" . "</td>";
                         echo "<td>" . $gider->aciklama . "</td>";
                         echo "<td>" . $gider->tarih . "</td>";
-                        echo "<td><a class='btn btn-sm btn-secondary' href='editGider.php?edit=" . $gider->id . "'><i class='fa-regular fa-pen-to-square'></i></a><button class='btn btn-sm btn-danger' onclick='confirmDelete(" . $gider->id . ")'><i class='fa-regular fa-trash-can'></button></td>";
+                        echo "<td><a class='btn btn-sm btn-secondary' data-toggle='tooltip' data-placement='bottom' title='Düzenle' href='editGider.php?edit=" . $gider->id . "'><i class='fa-regular fa-pen-to-square'></i></a><button class='btn btn-sm btn-danger' data-toggle='tooltip' data-placement='bottom' title='Sil' onclick='confirmDelete(" . $gider->id . ")'><i class='fa-regular fa-trash-can'></button></td>";
                         echo "</tr>";
                     }
                 ?>

@@ -64,7 +64,7 @@
                         echo "<td>" . $gelir->miktar . "₺" . "</td>";
                         echo "<td>" . $gelir->aciklama . "</td>";
                         echo "<td>" . $gelir->tarih . "</td>";
-                        echo "<td><a class='btn btn-sm btn-secondary' href='editGelir.php?edit=" . $gelir->id . "'><i class='fa-regular fa-pen-to-square'></i></a><button class='btn btn-sm btn-danger' onclick='confirmDelete(" . $gelir->id . ")'><i class='fa-regular fa-trash-can'></button></td>";
+                        echo "<td><a class='btn btn-sm btn-secondary' data-toggle='tooltip' data-placement='bottom' title='Düzenle' href='editGelir.php?edit=" . $gelir->id . "'><i class='fa-regular fa-pen-to-square'></i></a><button class='btn btn-sm btn-danger' data-toggle='tooltip' data-placement='bottom' title='Sil' onclick='confirmDelete(" . $gelir->id . ")'><i class='fa-regular fa-trash-can'></button></td>";
                         echo "</tr>";
                     }
                 ?>
