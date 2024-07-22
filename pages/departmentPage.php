@@ -18,6 +18,11 @@
         exit();
     }
 
+    if(isset($_POST['Vazgec'])) {
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
+    }
+
     if(isset($_GET['delete'])) {
         $department = selectDepartmentById($_GET['delete']);
         deleteDepartment($department);
@@ -54,12 +59,13 @@
                     $currentDepartment = selectDepartmentById($departmentId);
                 }
             ?>
-            <h5>Departman Ekle&Düzenle</h5>
+            <h5><?php echo isset($_GET['edit']) ? 'Departman Düzenle' : 'Departman Ekle' ;?></h5>
             <form action="" method="POST">
                 <label for="name">Ad</label>
                 <input type="hidden" name="id" value="<?php echo $currentDepartment ? $currentDepartment->getId() : ''; ?>">
                 <input type="text" id="name" name="name" class="form-control" style="text-align: center;" value="<?php echo $currentDepartment ? $currentDepartment->getName() : ''; ?>"><br>
-                <input type="submit" name="Kaydet" value="Kaydet" class="btn btn-success btn-sm text-center">
+                <input type="submit" name="Kaydet" value="<?php echo isset($_GET['edit']) ? 'Güncelle' : 'Kaydet';?>" class="btn btn-success btn-sm text-center">
+                <input type="<?php echo isset($_GET['edit']) ? 'submit' : 'hidden';?>" name="Vazgec" value="Vazgeç" class="btn btn-secondary btn-sm text-center">
             </form>
         </div>
         <div class="col">
